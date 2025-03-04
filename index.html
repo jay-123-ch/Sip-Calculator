@@ -1,0 +1,152 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>SIP Calculator</title>  
+    <style>  
+        body {  
+            font-family: Arial, sans-serif;  
+            max-width: 600px;  
+            margin: 20px auto;  
+            padding: 20px;  
+            background-color: sky blue;  
+            color: #000000; /* Black text color */  
+            display: flex;  
+            flex-direction: column;  
+            min-height: 100vh;  
+        }  
+
+        .calculator {  
+            background-color: #ffffff; /* White calculator container */  
+            padding: 20px;  
+            border-radius: 8px;  
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);  
+            margin-bottom: auto;  
+        }  
+
+        h2 {  
+            color: #0052a3; /* Dark blue header */  
+            text-align: center;  
+            margin-bottom: 20px;  
+            padding: 10px;  
+            border-radius: 4px;  
+        }  
+
+        .input-group {  
+            margin-bottom: 15px;  
+        }  
+
+        label {  
+            display: block;  
+            margin-bottom: 5px;  
+            font-weight: bold;  
+        }  
+
+        input {  
+            width: 100%;  
+            padding: 8px;  
+            border: 1px solid #003399;  
+            border-radius: 4px;  
+            box-sizing: border-box;  
+            background-color: #ffffff;  
+            color: #000000;  
+        }  
+
+        button {  
+            background-color: yellow;  
+            color: #000000;  
+            padding: 10px 20px;  
+            border: none;  
+            border-radius: 4px;  
+            cursor: pointer;  
+            margin: 10px 0;  
+        }  
+
+        button:hover {  
+            background-color: #003d99;  
+        }  
+
+        .results {  
+            margin-top: 20px;  
+            padding: 0;  
+            background-color: #f9f9f9;  
+            border-radius: 4px;  
+        }  
+
+        .result-item {  
+            margin: 10px 0;  
+            font-size: 16px;  
+        }  
+
+        footer {  
+            text-align: center;  
+            margin-top: auto;  
+            padding: 20px;  
+            background-color: #ffffff;  
+            border-radius: 4px;  
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);  
+        }  
+    </style>  
+</head>  
+<body>  
+    <div class="calculator">  
+        <h2>✨ SIP Calculator ✨</h2>  
+        
+        <div class="input-group">  
+            <label>Monthly Investment (₹)</label>  
+            <input type="number" id="monthlyInvestment" required>  
+        </div>  
+
+        <div class="input-group">  
+            <label>Expected Rate of Return (%)</label>  
+            <input type="number" id="rate" step="0.1" required>  
+        </div>  
+
+        <div class="input-group">  
+            <label>Investment Period (years)</label>  
+            <input type="number" id="years" required>  
+        </div>  
+
+        <button onclick="calculateSIP()">Calculate</button>                               <body style="background-color:tomato;">
+        <button type="reset" onclick="resetValues()">Reset</button>  
+
+        <div class="results" id="results">  
+            <div class="result-item">Invested Amount: ₹<span id="investedAmount">0.00</span></div>  
+            <div class="result-item">Estimated Returns: ₹<span id="returns">0.00</span></div>  
+            <div class="result-item">Total Value: ₹<span id="totalValue">0.00</span></div>  
+        </div>  
+    </div>
+
+    <script>  
+        function calculateSIP() {  
+            const monthlyInvestment = parseFloat(document.getElementById('monthlyInvestment').value);  
+            const rate = parseFloat(document.getElementById('rate').value) / 100 / 12; // Monthly rate  
+            const years = parseFloat(document.getElementById('years').value);  
+            const months = years * 12;  
+
+            // Calculate returns  
+            let amount = 0;  
+            for(let i = 0; i < months; i++) {  
+                amount = (amount + monthlyInvestment) * (1 + rate);  
+            }  
+
+            const investedAmount = monthlyInvestment * months;  
+            const estimatedReturns = amount - investedAmount;  
+            const totalValue = amount;  
+
+            // Display results  
+            document.getElementById('investedAmount').textContent = investedAmount.toFixed(2);  
+            document.getElementById('returns').textContent = estimatedReturns.toFixed(2);  
+            document.getElementById('totalValue').textContent = totalValue.toFixed(2);  
+        }  
+
+        function resetValues() {  
+            document.getElementById('investedAmount').textContent = '0.00';  
+            document.getElementById('returns').textContent = '0.00';  
+            document.getElementById('totalValue').textContent = '0.00';  
+            document.querySelectorAll('input').forEach(input => input.value = '');  
+        }  
+    </script>  
+</body>  
+</html>  
